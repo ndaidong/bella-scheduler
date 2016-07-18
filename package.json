@@ -1,0 +1,50 @@
+{
+  "version": "1.0.0",
+  "name": "bella-scheduler",
+  "description": "A useful helper for any javascript program",
+  "homepage": "https://www.npmjs.com/package/bella-scheduler",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ndaidong/bella-scheduler"
+  },
+  "author": "@ndaidong",
+  "main": "./index.js",
+  "engines": {
+    "node": ">= 6.0"
+  },
+  "scripts": {
+    "test": "snyk test && tape test/start.js | tap-spec",
+    "coverage": "nyc tape test/start.js | tap-spec",
+    "report": "npm run coverage && nyc report --reporter=lcov",
+    "coveralls": "npm run report && cat ./coverage/lcov.info | coveralls",
+    "build": "gccmin src dist/scheduler.min.js",
+    "snyk": "snyk wizard"
+  },
+  "devDependencies": {
+    "coveralls": "latest",
+    "gcc-min": "latest",
+    "nyc": "latest",
+    "sinon": "latest",
+    "snyk": "latest",
+    "tap-spec": "latest",
+    "tape": "latest"
+  },
+  "keywords": [
+    "cron",
+    "cronjob",
+    "scheduler",
+    "timer",
+    "task",
+    "util"
+  ],
+  "license": "MIT",
+  "maintainers": [
+    "ndaidong <ndaidong@gmail.com>"
+  ],
+  "bugs": {
+    "url": "https://github.com/ndaidong/bella-scheduler/issues"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
