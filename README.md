@@ -19,7 +19,7 @@ Lightweight util for handling schedule in your Node.js and browser apps.
 
 - CDN
 
-  [bella-scheduler.min.js](https://cdn.rawgit.com/ndaidong/bella-scheduler/master/dist/scheduler.min.js)
+  [scheduler.min.js](https://cdn.rawgit.com/ndaidong/bella-scheduler/master/dist/scheduler.min.js)
 
   ```
   <script type="text/javascript" src="https://cdn.rawgit.com/ndaidong/bella-scheduler/master/dist/scheduler.min.js"></script>
@@ -27,6 +27,24 @@ Lightweight util for handling schedule in your Node.js and browser apps.
 
 - This library also supports ES6 Module, AMD and UMD style.
 
+
+# Usage
+
+```
+var scheduler = require('bella-scheduler');
+
+scheduler.once('5s', () => {
+  console.log('Resolved task.');
+});
+
+scheduler.every('sunday 8:00', () => {
+  console.log('Resolved a task on Sunday at 8 AM.');
+});
+
+scheduler.daily('15:00', () => {
+  console.log('Resolved a daily task at 3 PM...');
+});
+```
 
 # APIs
 
