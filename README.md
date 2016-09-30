@@ -5,7 +5,7 @@ Lightweight util for handling schedule in your Node.js and browser apps.
 
 [![NPM](https://badge.fury.io/js/bella-scheduler.svg)](https://badge.fury.io/js/bella-scheduler) ![Travis](https://travis-ci.org/ndaidong/bella-scheduler.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/ndaidong/bella-scheduler/badge.svg?branch=master)](https://coveralls.io/github/ndaidong/bella-scheduler?branch=master)
-![devDependency Status](https://david-dm.org/ndaidong/bella-scheduler.svg)
+[![Dependency Status](https://www.versioneye.com/user/projects/57e8df2abd6fa6004e122a81/badge.svg?style=flat)](https://www.versioneye.com/user/projects/57e8df2abd6fa6004e122a81)
 [![Known Vulnerabilities](https://snyk.io/test/npm/bella-scheduler/badge.svg)](https://snyk.io/test/npm/bella-scheduler)
 
 

@@ -20,7 +20,65 @@
 
   const MAX_TIMEOUT = 2147483647;
 
-  var TaskList = new Map();
+  var isUndefined = (v) => {
+    return v === undefined; // eslint-disable-line no-undefined
+  };
+
+  var hasProperty = (ob, k) => {
+    if (!ob || !k) {
+      return false;
+    }
+    let r = true;
+    if (isUndefined(ob[k])) {
+      r = k in ob;
+    }
+    return r;
+  };
+
+  class BellaMap {
+    constructor() {
+      this.size = 0;
+      this.data = {};
+    }
+
+    set(k, v) {
+      let d = this.data;
+      if (!hasProperty(d, k)) {
+        this.size++;
+      }
+      d[k] = v;
+      return this;
+    }
+
+    get(k) {
+      let d = this.data;
+      return d[k] || null;
+    }
+
+    all() {
+      let d = this.data;
+      let a = [];
+      for (let k in d) {
+        if (!isUndefined(d[k])) {
+          a.push(d[k]);
+        }
+      }
+      return a;
+    }
+
+    delete(k) {
+      let d = this.data;
+      if (!hasProperty(d, k)) {
+        return false;
+      }
+      d[k] = null;
+      delete d[k];
+      this.size--;
+      return true;
+    }
+  }
+
+  var TaskList = new BellaMap();
   var checkTimer;
 
   var now = () => {
@@ -264,7 +322,7 @@
     if (TaskList.size > 0) {
       let minDelay = MAX_TIMEOUT;
       let candidates = [];
-      TaskList.forEach((task) => {
+      TaskList.all().forEach((task) => {
         let id = task.id;
         let delay = getDelayTime(task.time, task.lastTick);
         if (delay < 0) {

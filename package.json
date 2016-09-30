@@ -1,5 +1,5 @@
 {
-  "version": "1.0.12",
+  "version": "1.1.0",
   "name": "bella-scheduler",
   "description": "A useful helper for any javascript program",
   "homepage": "https://www.npmjs.com/package/bella-scheduler",
@@ -13,15 +13,20 @@
     "node": ">= 6.0"
   },
   "scripts": {
-    "test": "snyk test && tape test/start.js | tap-spec",
-    "coverage": "nyc tape test/start.js | tap-spec",
-    "report": "npm run coverage && nyc report --reporter=lcov",
-    "coveralls": "npm run report && cat ./coverage/lcov.info | coveralls",
-    "build": "gccmin src dist/scheduler.min.js",
-    "snyk": "snyk wizard"
+    "lint": "eslint .",
+    "snyk": "snyk test",
+    "tape": "nyc tape test/start.js | tap-spec",
+    "report": "nyc report --reporter=lcov",
+    "pretest": "npm run lint && npm run snyk",
+    "test": "npm run tape",
+    "posttest": "npm run report",
+    "coveralls": "npm test && cat ./coverage/lcov.info | coveralls",
+    "build": "gccmin src dist/scheduler.min.js"
   },
   "devDependencies": {
     "coveralls": "latest",
+    "eslint": "latest",
+    "eslint-config-ggc": "latest",
     "gcc-min": "latest",
     "nyc": "latest",
     "sinon": "latest",
@@ -37,14 +42,5 @@
     "task",
     "util"
   ],
-  "license": "MIT",
-  "maintainers": [
-    "ndaidong <ndaidong@gmail.com>"
-  ],
-  "bugs": {
-    "url": "https://github.com/ndaidong/bella-scheduler/issues"
-  },
-  "directories": {
-    "test": "test"
-  }
+  "license": "MIT"
 }
