@@ -20,11 +20,8 @@ Lightweight util for handling schedule in your Node.js and browser apps.
 
 - CDN
 
-  [scheduler.min.js](https://cdn.rawgit.com/ndaidong/bella-scheduler/master/dist/scheduler.min.js)
-
-  ```
-  <script type="text/javascript" src="https://cdn.rawgit.com/ndaidong/bella-scheduler/master/dist/scheduler.min.js"></script>
-  ```
+  - [scheduler.js](https://cdn.rawgit.com/ndaidong/bella-scheduler/master/dist/scheduler.js)
+  - [scheduler.min.js](https://cdn.rawgit.com/ndaidong/bella-scheduler/master/dist/scheduler.min.js)
 
 - This library also supports ES6 Module, AMD and UMD style.
 
