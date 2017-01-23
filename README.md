@@ -52,6 +52,7 @@ scheduler.daily('15:00', () => {
  - .daily(String pattern, Function callback)
  - .monthly(String pattern, Function callback)
  - .yearly(String pattern, Function callback)
+ - .unregister(String taskId)
 
 
 Almost cases you can use this library instead of setInterval or setTimeout, because it runs only one timer for the entire process. Regarding parameter "pattern" for .every(), it may be:
@@ -102,6 +103,18 @@ For example:
 The available units: **d** (days), **h** (hours), **m** (minutes), **s** (seconds).
 
 The method .once() do the same thing as .every(), but just once. The 4 remain methods yearly(), monthly(), daily(), hourly() can be looked as the shortcuts of every().
+
+
+### .unregister(taskId)
+
+Remove a task from scheduler.
+
+Returns true if successfull removing.
+
+```
+let taskId = scheduler.every('5m', callback);
+scheduler.unregister(taskId);
+```
 
 
 # Test
