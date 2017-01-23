@@ -1,7 +1,7 @@
 /**
  * bella-scheduler
- * v1.1.3
- * built: Fri, 18 Nov 2016 07:58:10 GMT
+ * v1.1.4
+ * built: Mon, 23 Jan 2017 04:53:55 GMT
  * git: https://github.com/ndaidong/bella-scheduler
  * author: @ndaidong
  * License: MIT
@@ -80,8 +80,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         return a;
       }
     }, {
-      key: 'delete',
-      value: function _delete(k) {
+      key: 'remove',
+      value: function remove(k) {
         var d = this.data;
         if (!hasProperty(d, k)) {
           return false;
@@ -327,7 +327,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     task.fn();
     var id = task.id;
     if (!task.repeat) {
-      return TaskList.delete(id);
+      return TaskList.remove(id);
     }
 
     var t = time();
@@ -337,6 +337,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
   };
 
   var updateTimer = function updateTimer() {
+    if (checkTimer) {
+      clearTimeout(checkTimer);
+    }
     if (TaskList.size > 0) {
       (function () {
         var minDelay = MAX_TIMEOUT;
@@ -345,7 +348,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var id = task.id;
           var delay = getDelayTime(task.time, task.lastTick);
           if (delay < 0) {
-            TaskList.delete(id);
+            TaskList.remove(id);
           } else if (delay === 0) {
             task.delay = 0;
             candidates.push(task);
@@ -362,9 +365,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
             }
           }
         });
-        if (checkTimer) {
-          clearTimeout(checkTimer);
-        }
         if (candidates.length) {
           checkTimer = setTimeout(function () {
             candidates.map(execute);
@@ -390,20 +390,29 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     };
     TaskList.set(id, task);
     updateTimer();
+    return id;
+  };
+
+  var unregister = function unregister(id) {
+    if (TaskList.remove(id)) {
+      updateTimer();
+      return true;
+    }
+    return false;
   };
 
   return {
     yearly: function yearly(t, fn) {
       var pt = '* ' + t;
-      register(pt, fn);
+      return register(pt, fn);
     },
     monthly: function monthly(t, fn) {
       var pt = '* * ' + t;
-      register(pt, fn);
+      return register(pt, fn);
     },
     daily: function daily(t, fn) {
       var pt = '* * * ' + t;
-      register(pt, fn);
+      return register(pt, fn);
     },
     hourly: function hourly(t, fn) {
       var pt = '* * * * ' + t;
@@ -414,6 +423,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     },
     once: function once(t, fn) {
       return register(t, fn, 1);
-    }
+    },
+
+    unregister: unregister
   };
 });

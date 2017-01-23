@@ -54,6 +54,7 @@ test('Testing if called on Wednesday:', (assert) => {
   assert.end();
 });
 
+
 test('Testing other methods:', (assert) => {
 
   let t = new Date(2016, 3, 18, 14, 0, 0);
@@ -109,5 +110,30 @@ test('Testing other methods:', (assert) => {
   clock.tick(6e4 * 60 * 24 * 1500);
   assert.deepEquals(yearly.callCount, 5, 'Yearly task must be called 5 times');
 
+  clock.restore();
+  assert.end();
+});
+
+
+test('Testing .unregister() method:', (assert) => {
+
+  let callback = sinon.spy();
+  let t = new Date(2016, 3, 18, 14, 0, 0);
+
+  // set start time is Monday, 14:00:00 04/18/2016
+  let clock = sinon.useFakeTimers(t.getTime());
+
+  let tid = scheduler.once('wed 15', callback);
+  assert.ok(tid, 'It must return an ID');
+
+  if (tid) {
+    let re = scheduler.unregister(tid);
+    assert.ok(re === true, `unregister(${tid}) must be done`);
+  }
+
+  clock.tick(6e4 * 60 * 24 * 3);
+  assert.deepEquals(callback.callCount, 0, 'Callback must be called 0 time');
+
+  clock.restore();
   assert.end();
 });
