@@ -51,7 +51,7 @@ class BellaMap {
     return a;
   }
 
-  delete(k) {
+  remove(k) {
     let d = this.data;
     if (!hasProperty(d, k)) {
       return false;
@@ -294,7 +294,7 @@ var execute = (task) => {
   task.fn();
   let id = task.id;
   if (!task.repeat) {
-    return TaskList.delete(id);
+    return TaskList.remove(id);
   }
 
   let t = time();
@@ -304,6 +304,9 @@ var execute = (task) => {
 };
 
 var updateTimer = () => {
+  if (checkTimer) {
+    clearTimeout(checkTimer);
+  }
   if (TaskList.size > 0) {
     let minDelay = MAX_TIMEOUT;
     let candidates = [];
@@ -311,7 +314,7 @@ var updateTimer = () => {
       let id = task.id;
       let delay = getDelayTime(task.time, task.lastTick);
       if (delay < 0) {
-        TaskList.delete(id);
+        TaskList.remove(id);
       } else if (delay === 0) {
         task.delay = 0;
         candidates.push(task);
@@ -328,16 +331,12 @@ var updateTimer = () => {
         }
       }
     });
-    if (checkTimer) {
-      clearTimeout(checkTimer);
-    }
     if (candidates.length) {
       checkTimer = setTimeout(() => {
         candidates.map(execute);
         setTimeout(updateTimer, 1);
       }, minDelay);
     }
-
   }
 };
 
@@ -356,20 +355,29 @@ var register = (t, fn, once) => {
   };
   TaskList.set(id, task);
   updateTimer();
+  return id;
+};
+
+var unregister = (id) => {
+  if (TaskList.remove(id)) {
+    updateTimer();
+    return true;
+  }
+  return false;
 };
 
 module.exports = {
   yearly(t, fn) {
     let pt = '* ' + t;
-    register(pt, fn);
+    return register(pt, fn);
   },
   monthly(t, fn) {
     let pt = '* * ' + t;
-    register(pt, fn);
+    return register(pt, fn);
   },
   daily(t, fn) {
     let pt = '* * * ' + t;
-    register(pt, fn);
+    return register(pt, fn);
   },
   hourly(t, fn) {
     let pt = '* * * * ' + t;
@@ -380,5 +388,6 @@ module.exports = {
   },
   once(t, fn) {
     return register(t, fn, 1);
-  }
+  },
+  unregister
 };
