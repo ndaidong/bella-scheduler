@@ -1,6 +1,8 @@
 /**
- * Starting app
+ * Load core
  * @ndaidong
 **/
-exports = module.exports = require('./src/main');
-exports.version = require('./package.json').version;
+
+var main = require('./dist/scheduler');
+main.version = require('./package').version;
+module.exports = main;
