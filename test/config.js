@@ -1,5 +1,5 @@
 
-var scheduler = require('../src/main');
+var scheduler = require('../dist/scheduler.min');
 
 module.exports = {
   scheduler
