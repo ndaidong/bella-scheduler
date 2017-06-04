@@ -5,20 +5,12 @@
 
 const MAX_TIMEOUT = 2147483647;
 
-var isUndefined = (v) => {
-  return v === undefined; // eslint-disable-line no-undefined
-};
-
-var hasProperty = (ob, k) => {
-  if (!ob || !k) {
-    return false;
-  }
-  let r = true;
-  if (isUndefined(ob[k])) {
-    r = k in ob;
-  }
-  return r;
-};
+import {
+  isUndefined,
+  hasProperty,
+  time,
+  createId
+} from 'bellajs';
 
 class BellaMap {
   constructor() {
@@ -66,14 +58,6 @@ class BellaMap {
 var TaskList = new BellaMap();
 var checkTimer;
 
-var now = () => {
-  return new Date();
-};
-
-var time = () => {
-  return now().getTime();
-};
-
 var getIndex = (arr, item) => {
   let r = -1;
   for (let i = 0; i < arr.length; i++) {
@@ -83,26 +67,6 @@ var getIndex = (arr, item) => {
     }
   }
   return r;
-};
-
-var createId = (leng, prefix) => {
-  let rn = () => {
-    return Math.random().toString(36).slice(2);
-  };
-  let a = [];
-  while (a.length < 10) {
-    a.push(rn());
-  }
-  let r = a.join('');
-  let t = r.length;
-  let px = prefix || '';
-  let ln = Math.max(leng || 32, px.length);
-  let s = px;
-  while (s.length < ln) {
-    let k = Math.floor(Math.random() * t);
-    s += r.charAt(k) || '';
-  }
-  return s;
 };
 
 var getNextDay = (t, tday) => {
