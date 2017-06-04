@@ -1,5 +1,5 @@
 /**
- * bellajs
+ * bella-scheduler
  * @ndaidong
 **/
 
