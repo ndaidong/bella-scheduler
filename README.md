@@ -5,9 +5,9 @@ Lightweight util for handling schedule in your Node.js and browser apps.
 
 [![NPM](https://badge.fury.io/js/bella-scheduler.svg)](https://badge.fury.io/js/bella-scheduler)
 [![Build Status](https://travis-ci.org/ndaidong/bella-scheduler.svg?branch=master)](https://travis-ci.org/ndaidong/bella-scheduler)
-[![Coverage Status](https://coveralls.io/repos/github/ndaidong/bella-scheduler/badge.svg?branch=master)](https://coveralls.io/github/ndaidong/bella-scheduler?branch=master)
+[![codecov](https://codecov.io/gh/ndaidong/bella-scheduler/branch/master/graph/badge.svg)](https://codecov.io/gh/ndaidong/bella-scheduler)
 [![Dependency Status](https://gemnasium.com/badges/github.com/ndaidong/bella-scheduler.svg)](https://gemnasium.com/github.com/ndaidong/bella-scheduler)
-[![Known Vulnerabilities](https://snyk.io/test/npm/bella-scheduler/badge.svg)](https://snyk.io/test/npm/bella-scheduler)
+[![NSP Status](https://nodesecurity.io/orgs/techpush/projects/bc63bba1-d201-4846-8e37-49daaf43311c/badge)](https://nodesecurity.io/orgs/techpush/projects/bc63bba1-d201-4846-8e37-49daaf43311c)
 
 
 ## Setup
@@ -22,29 +22,35 @@ Lightweight util for handling schedule in your Node.js and browser apps.
 
   - [scheduler.js](https://cdn.rawgit.com/ndaidong/bella-scheduler/master/dist/scheduler.js)
   - [scheduler.min.js](https://cdn.rawgit.com/ndaidong/bella-scheduler/master/dist/scheduler.min.js)
+  - [scheduler.min.map](https://cdn.rawgit.com/ndaidong/bella-scheduler/master/dist/scheduler.min.map)
 
-- This library also supports ES6 Module, AMD and UMD style.
+- Also supports ES6 Module, CommonJS, AMD and UMD style.
 
 
-# Usage
+## Usage
 
 ```
-var scheduler = require('bella-scheduler');
+import {
+  once,
+  every,
+  daily
+} from 'bella-scheduler';
 
-scheduler.once('5s', () => {
+once('5s', () => {
   console.log('Resolved task.');
 });
 
-scheduler.every('sunday 8:00', () => {
+every('sunday 8:00', () => {
   console.log('Resolved a task on Sunday at 8 AM.');
 });
 
-scheduler.daily('15:00', () => {
+daily('15:00', () => {
   console.log('Resolved a daily task at 3 PM...');
 });
 ```
 
-# APIs
+
+## APIs
 
  - .every(String pattern, Function callback)
  - .once(String pattern, Function callback)
@@ -117,7 +123,7 @@ scheduler.unregister(taskId);
 ```
 
 
-# Test
+## Test
 
 ```
 git clone https://github.com/ndaidong/bella-scheduler.git

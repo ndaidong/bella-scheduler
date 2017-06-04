@@ -1,49 +1,67 @@
 {
-  "version": "1.1.6",
+  "version": "1.2.0",
   "name": "bella-scheduler",
-  "description": "A useful helper for any javascript program",
+  "description": "To do something later, repeater",
   "homepage": "https://www.npmjs.com/package/bella-scheduler",
   "repository": {
     "type": "git",
     "url": "https://github.com/ndaidong/bella-scheduler"
   },
   "author": "@ndaidong",
-  "main": "./index.js",
+  "main": "./dist/scheduler.js",
+  "module": "./src/main",
+  "jsnext:main": "./src/main",
+  "browser": "./dist/scheduler.min.js",
   "engines": {
     "node": ">= 6.0"
   },
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint src tests",
     "nsp": "nsp check --output checkstyle",
-    "tape": "nyc tape test/start.js | tap-spec",
-    "report": "nyc report --reporter=lcov",
+    "tape": "nyc babel-node node_modules/.bin/tape tests/start.js | tap-spec",
+    "report": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "pretest": "npm run lint && npm run nsp",
     "test": "npm run tape",
-    "posttest": "npm run report",
-    "coveralls": "npm test && cat ./coverage/lcov.info | coveralls",
-    "build": "gccmin"
+    "posttest": "CODECOV_TOKEN=2b86c4bc-c4d1-437e-af73-aeb6bcbf66f2 npm run report",
+    "start": "babel-node src/main",
+    "build": "gccmin -e src/main.js -n scheduler -o dist -p package.json",
+    "reset": "node reset"
+  },
+  "dependencies": {
+    "bellajs": "7.x.x"
   },
   "devDependencies": {
-    "coveralls": "2.x.x",
+    "babel-cli": "6.x.x",
+    "babel-preset-env": "1.x.x",
+    "codecov": "2.x.x",
     "eslint": "3.x.x",
     "eslint-config-ggc": "1.x.x",
-    "gcc-min": "3.x.x",
+    "gcc-min": "5.x.x",
     "nsp": "2.x.x",
     "nyc": "10.x.x",
     "sinon": "1.x.x",
     "tap-spec": "4.x.x",
     "tape": "4.x.x"
   },
-  "gccmin": {
-    "source": "src",
-    "target": "dist",
-    "filename": "scheduler",
-    "globalVar": "scheduler"
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "browsers": [
+              "> 1%"
+            ]
+          }
+        }
+      ]
+    ]
   },
   "keywords": [
     "cron",
     "cronjob",
     "scheduler",
+    "repeater",
     "timer",
     "task",
     "util"
