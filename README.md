@@ -15,7 +15,7 @@ Lightweight util for handling schedule in your Node.js and browser apps.
 - Node.js
 
   ```
-  npm install bella-scheduler --save
+  npm install bella-scheduler
   ```
 
 - CDN
