@@ -1,5 +1,5 @@
 {
-  "version": "1.2.0",
+  "version": "1.2.1",
   "name": "bella-scheduler",
   "description": "To do something later, repeater",
   "homepage": "https://www.npmjs.com/package/bella-scheduler",
@@ -32,14 +32,15 @@
   },
   "devDependencies": {
     "babel-cli": "6.x.x",
+    "babel-plugin-transform-remove-strict-mode": "0.x.x",
     "babel-preset-env": "1.x.x",
     "codecov": "2.x.x",
     "eslint": "3.x.x",
     "eslint-config-ggc": "1.x.x",
     "gcc-min": "5.x.x",
     "nsp": "2.x.x",
-    "nyc": "10.x.x",
-    "sinon": "1.x.x",
+    "nyc": "11.x.x",
+    "sinon": "2.x.x",
     "tap-spec": "4.x.x",
     "tape": "4.x.x"
   },
@@ -54,6 +55,11 @@
             ]
           }
         }
+      ]
+    ],
+    "plugins": [
+      [
+        "transform-remove-strict-mode"
       ]
     ]
   },

@@ -1,6 +1,6 @@
 /**
- * bella-scheduler@1.2.0
- * built on: Sun, 04 Jun 2017 09:10:23 GMT
+ * bella-scheduler@1.2.1
+ * built on: Sun, 04 Jun 2017 15:04:14 GMT
  * repository: https://github.com/ndaidong/bella-scheduler
  * maintainer: @ndaidong
  * License: MIT
