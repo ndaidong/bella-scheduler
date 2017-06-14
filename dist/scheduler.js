@@ -1,15 +1,15 @@
 /**
- * bella-scheduler@1.2.1
- * built on: Sun, 04 Jun 2017 15:04:14 GMT
+ * bella-scheduler@1.2.11
+ * built on: Wed, 14 Jun 2017 06:29:27 GMT
  * repository: https://github.com/ndaidong/bella-scheduler
  * maintainer: @ndaidong
  * License: MIT
 **/
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (factory());
-}(this, (function () { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+  (factory((global.scheduler = global.scheduler || {})));
+}(this, (function (exports) { 'use strict';
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -79,10 +79,12 @@
     }
     return s;
   };
+  var now = function now() {
+    return new Date();
+  };
   var time = function time() {
     return Date.now();
   };
-  var MAX_TIMEOUT = 2147483647;
   var BellaMap = function () {
     function BellaMap() {
       classCallCheck(this, BellaMap);
@@ -132,23 +134,6 @@
     }]);
     return BellaMap;
   }();
-  var TaskList = new BellaMap();
-  var checkTimer;
-  var getIndex = function getIndex(arr, item) {
-    var r = -1;
-    for (var i = 0; i < arr.length; i++) {
-      if (arr[i] === item) {
-        r = i;
-        break;
-      }
-    }
-    return r;
-  };
-  var getNextDay = function getNextDay(t, tday) {
-    var d = new Date(t);
-    d.setDate(d.getDate() + tday + 7 - d.getDay() % 7);
-    return d;
-  };
   var getDT1 = function getDT1(mat, lastTick) {
     var delta = 0;
     var passed = time() - lastTick;
@@ -169,9 +154,24 @@
     delta *= v;
     return delta - passed;
   };
+  var getIndex = function getIndex(arr, item) {
+    var r = -1;
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] === item) {
+        r = i;
+        break;
+      }
+    }
+    return r;
+  };
+  var getNextDay = function getNextDay(t, tday) {
+    var d = new Date(t);
+    d.setDate(d.getDate() + tday + 7 - d.getDay() % 7);
+    return d;
+  };
   var getDT2 = function getDT2(mat) {
     var wds = 'sun|mon|tue|wed|thu|fri|sat'.split('|');
-    var today = new Date();
+    var today = now();
     var wday = today.getDay();
     var awd = wds[wday];
     var awi = getIndex(awd, wds);
@@ -210,7 +210,7 @@
     var hh = mat[4] === '*' ? '*' : parseInt(mat[4], 10);
     var ii = mat[5] === '*' ? '*' : parseInt(mat[5], 10);
     var ss = mat[6] === '*' ? '*' : parseInt(mat[6], 10);
-    var today = new Date();
+    var today = now();
     var ayy = today.getFullYear();
     if (yy !== '*' && yy < ayy) {
       return -1;
@@ -281,6 +281,9 @@
     }
     return delta;
   };
+  var MAX_TIMEOUT = 2147483647;
+  var TaskList = new BellaMap();
+  var checkTimer;
   var getDelayTime = function getDelayTime(pat, lastTick) {
     var pt1 = /^(\d+)\s?(d|h|m|s)+$/i;
     var pt2 = /^(sun|mon|tue|wed|thu|fri|sat)+\w*\s+(\d+)(:\d+)?(:\d+)?$/i;
@@ -363,6 +366,28 @@
     updateTimer();
     return id;
   };
+  var yearly = function yearly(t, fn) {
+    var pt = '* ' + t;
+    return register(pt, fn);
+  };
+  var monthly = function monthly(t, fn) {
+    var pt = '* * ' + t;
+    return register(pt, fn);
+  };
+  var daily = function daily(t, fn) {
+    var pt = '* * * ' + t;
+    return register(pt, fn);
+  };
+  var hourly = function hourly(t, fn) {
+    var pt = '* * * * ' + t;
+    return register(pt, fn);
+  };
+  var every = function every(t, fn) {
+    return register(t, fn);
+  };
+  var once = function once(t, fn) {
+    return register(t, fn, 1);
+  };
   var unregister = function unregister(id) {
     if (TaskList.remove(id)) {
       updateTimer();
@@ -370,29 +395,12 @@
     }
     return false;
   };
-  module.exports = {
-    yearly: function yearly(t, fn) {
-      var pt = '* ' + t;
-      return register(pt, fn);
-    },
-    monthly: function monthly(t, fn) {
-      var pt = '* * ' + t;
-      return register(pt, fn);
-    },
-    daily: function daily(t, fn) {
-      var pt = '* * * ' + t;
-      return register(pt, fn);
-    },
-    hourly: function hourly(t, fn) {
-      var pt = '* * * * ' + t;
-      return register(pt, fn);
-    },
-    every: function every(t, fn) {
-      return register(t, fn);
-    },
-    once: function once(t, fn) {
-      return register(t, fn, 1);
-    },
-    unregister: unregister
-  };
+  exports.yearly = yearly;
+  exports.monthly = monthly;
+  exports.daily = daily;
+  exports.hourly = hourly;
+  exports.every = every;
+  exports.once = once;
+  exports.unregister = unregister;
+  Object.defineProperty(exports, '__esModule', { value: true });
 })));

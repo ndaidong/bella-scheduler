@@ -55,6 +55,22 @@ var checkScheduler = (scheduler) => {
     assert.end();
   });
 
+  test('Testing if called on everyday:', (assert) => {
+
+    let callback = sinon.spy();
+    let t = new Date(2016, 3, 18, 14, 0, 0);
+
+    // set start time is Monday, 14:00:00 04/18/2016
+    let clock = sinon.useFakeTimers(t.getTime());
+
+    scheduler.once('2016 04 * 15 30 10', callback);
+
+    clock.tick(6e4 * 60 * 24 * 3);
+    assert.deepEquals(callback.callCount, 1, 'Callback must be called 1 time');
+
+    clock.restore();
+    assert.end();
+  });
 
   test('Testing other methods:', (assert) => {
 
