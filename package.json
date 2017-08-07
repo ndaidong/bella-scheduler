@@ -1,5 +1,5 @@
 {
-  "version": "1.2.11",
+  "version": "1.2.2",
   "name": "bella-scheduler",
   "description": "To do something later, repeater",
   "homepage": "https://www.npmjs.com/package/bella-scheduler",
@@ -37,10 +37,10 @@
     "codecov": "2.x.x",
     "eslint": "4.x.x",
     "eslint-config-ggc": "1.x.x",
-    "gcc-min": "5.x.x",
+    "gcc-min": "6.x.x",
     "nsp": "2.x.x",
     "nyc": "11.x.x",
-    "sinon": "2.x.x",
+    "sinon": "3.x.x",
     "tap-spec": "4.x.x",
     "tape": "4.x.x"
   },

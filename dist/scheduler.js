@@ -1,6 +1,6 @@
 /**
- * bella-scheduler@1.2.11
- * built on: Wed, 14 Jun 2017 06:29:27 GMT
+ * bella-scheduler@1.2.2
+ * built on: Mon, 07 Aug 2017 06:33:29 GMT
  * repository: https://github.com/ndaidong/bella-scheduler
  * maintainer: @ndaidong
  * License: MIT
@@ -8,7 +8,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.scheduler = global.scheduler || {})));
+  (factory((global.scheduler = {})));
 }(this, (function (exports) { 'use strict';
   var classCallCheck = function (instance, Constructor) {
     if (!(instance instanceof Constructor)) {
